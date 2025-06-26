@@ -1,15 +1,13 @@
-export default function handler(req, res) {
-  // ✅ CORS headers
+export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-  // ✅ Handle preflight
+  // ✅ Gérer les requêtes préflight CORS
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
-  // ✅ Handle POST
   if (req.method === "POST") {
     const crypto = require("crypto");
     const { data } = req.body;
@@ -22,6 +20,5 @@ export default function handler(req, res) {
     return res.status(200).json({ hash });
   }
 
-  // ❌ All other methods
   return res.status(405).json({ error: "Method not allowed" });
 }
